@@ -66,8 +66,7 @@ export default function Privileges() {
         console.log(privilege);
         if (privilege.editing === false){    
             return (
-                <li>{privilege.name} is  <button onClick={() => handleActiveButtonClick(privilege)}>{privilege.active? "active": "inactive"}</button>
-
+                <li key={privilege.id}>{privilege.name} is  <button onClick={() => handleActiveButtonClick(privilege)}>{privilege.active? "active": "inactive"}</button>
                 <button onClick={() => {
                 setPrivileges(
                   privileges.filter(p =>
