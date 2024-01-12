@@ -4,9 +4,8 @@ import { useState } from "react";
 export default function Privileges() {
   const [showMoreActive, setShowMoreActive] = useState(false);
   const [showMoreInactive, setShowMoreInactive] = useState(false);
-  const [InputName, setInputName] = useState("");
-  const [InputName2, setInputName2] = useState("");
-  const [currentID, setCurrentID] = useState();
+  const [editingNameInputValue, setEditingNameInputValue] = useState("");
+  const [addingNameInputValue, setAddingNameInputValue] = useState("");
 
   const [privileges, setPrivileges] = useState([
     {
@@ -64,7 +63,7 @@ export default function Privileges() {
     if (privilege.editing === false) {
       return (
         <li key={privilege.id}>
-          {privilege.name} is{" "}
+          {privilege.name} is
           <button onClick={() => handleActiveButtonClick(privilege)}>
             {privilege.active ? "active" : "inactive"}
           </button>
@@ -82,7 +81,7 @@ export default function Privileges() {
               if (isStartEditingOk(privileges) === true) {
                 const updatedPrivileges = privileges.map((current) => {
                   if (current.id === privilege.id) {
-                    setInputName2(privilege.name);
+                    setAddingNameInputValue(privilege.name);
                     return {
                       name: privilege.name,
                       active: privilege.active,
@@ -106,11 +105,11 @@ export default function Privileges() {
       return (
         <li key={privilege.id}>
           <input
-            value={InputName2}
+            value={addingNameInputValue}
             id={privilege.name}
-            onChange={(e) => setInputName2(e.target.value)}
-          />{" "}
-          is{" "}
+            onChange={(e) => setAddingNameInputValue(e.target.value)}
+          />
+          is
           <button onClick={() => handleActiveButtonClick}>
             {privilege.active ? "active" : "inactive"}
           </button>
@@ -127,9 +126,8 @@ export default function Privileges() {
             onClick={() => {
               const updatedPrivileges = privileges.map((current) => {
                 if (current.id === privilege.id) {
-                  setCurrentID(current.id);
                   return {
-                    name: InputName2,
+                    name: addingNameInputValue,
                     active: privilege.active,
                     id: privilege.id,
                     editing: false,
@@ -210,6 +208,7 @@ export default function Privileges() {
     }
   };
 
+  // not worrying about valdiation, so can comment out all this complicated code for now
   // const InputNameValidation = (privileges,InputName,isPrivilegeNew) => {
   //     var valid = true
 
@@ -235,21 +234,21 @@ export default function Privileges() {
   //     }
   // }
 
-  function AddEditedNameToArray(privilege, InputName) {
-    setPrivileges([
-      {
-        name: InputName.trim(),
-        active: privilege.active,
-        id: privilege.id,
-        editing: false,
-      },
-      ...privileges,
-    ]);
-    console.log(privileges);
-    return privileges;
-  }
+//   function AddEditedNameToArray(privilege, InputName) {
+//     setPrivileges([
+//       {
+//         name: InputName.trim(),
+//         active: privilege.active,
+//         id: privilege.id,
+//         editing: false,
+//       },
+//       ...privileges,
+//     ]);
+//     console.log(privileges);
+//     return privileges;
+//   }
 
-  function AddNewNameToArray(InputName) {
+  function addNewNameToArray(InputName) {
     setPrivileges([
       {
         name: InputName.trim(),
@@ -275,10 +274,10 @@ export default function Privileges() {
       {showMoreInactive && <p>{privileges.map(onlyInactive)}</p>}
 
       <h3>Add a privilege</h3>
-      <input value={InputName} onChange={(e) => setInputName(e.target.value)} />
+      <input value={editingNameInputValue} onChange={(e) => setEditingNameInputValue(e.target.value)} />
       <button
         onClick={() => {
-          AddNewNameToArray(InputName.trim());
+          addNewNameToArray(editingNameInputValue.trim());
         }}
       >
         Add
