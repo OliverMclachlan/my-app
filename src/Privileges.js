@@ -307,10 +307,7 @@ export default function Privileges() {
             value={InputName}
             onChange={e => setInputName(e.target.value)}
         />
-
-            <button onClick={() => {InputNameValidation(privileges,InputName.trim(),true)}}>Add</button>
-
-
+            <button onClick={() => {AddNewNameToArray(InputName.trim())}}>Add</button>
     </div>;
 
 
