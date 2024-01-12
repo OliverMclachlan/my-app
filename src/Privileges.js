@@ -146,7 +146,10 @@ export default function Privileges() {
                             
                         
                             });
-                    InputNameValidation(privileges,InputName2.trim(),false)
+
+                    setPrivileges(updatedPrivileges);
+                    // lets not worry about name validation for now
+                    //InputNameValidation(privileges,InputName2.trim(),false)
 
 
                 }}>
@@ -231,31 +234,31 @@ export default function Privileges() {
         }
     }
 
-    const InputNameValidation = (privileges,InputName,isPrivilegeNew) => {
-        var valid = true
+    // const InputNameValidation = (privileges,InputName,isPrivilegeNew) => {
+    //     var valid = true
         
 
-        privileges.forEach((privilege) => {
-            if (InputName.trim() === privilege.name && isPrivilegeNew === true){
-                valid = false;
-                return valid
-            }else if(InputName.trim() === privilege.name && currentID !== privilege.id && isPrivilegeNew === false){
-                valid = false
-                return valid
-            }else
-            console.log(InputName + " & " + valid + " & " + privilege.name)
-            return valid
-            }   
-        )
+    //     privileges.forEach((privilege) => {
+    //         if (InputName.trim() === privilege.name && isPrivilegeNew === true){
+    //             valid = false;
+    //             return valid
+    //         }else if(InputName.trim() === privilege.name && currentID !== privilege.id && isPrivilegeNew === false){
+    //             valid = false
+    //             return valid
+    //         }else
+    //         console.log(InputName + " & " + valid + " & " + privilege.name)
+    //         return valid
+    //         }   
+    //     )
         
-        if (valid === true && isPrivilegeNew === true){
-            AddNewNameToArray(InputName)
-        }else if  (valid === true && isPrivilegeNew === false){
-            AddEditedNameToArray(privileges,InputName)
-        }else{
-            return alert("Name already taken")
-        }   
-    }
+    //     if (valid === true && isPrivilegeNew === true){
+    //         AddNewNameToArray(InputName)
+    //     }else if  (valid === true && isPrivilegeNew === false){
+    //         AddEditedNameToArray(privileges,InputName)
+    //     }else{
+    //         return alert("Name already taken")
+    //     }   
+    // }
 
     function AddEditedNameToArray(privilege,InputName) {    
         setPrivileges([
