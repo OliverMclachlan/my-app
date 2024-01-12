@@ -199,17 +199,19 @@ export default function Privileges() {
     };
 
     function isStartEditingOk(privileges){
-        var valid = false
+        var valid = true
         console.log(valid + "jfjf")
         privileges.forEach((privilege) => {
             if(privilege.editing === true){
                 valid = false
                 console.log(valid + "aaaaaaaaa")
+
             }
         })
 
         if (valid === false){
             alert("You are already editing another line")
+            return valid
         }
         return valid
     }
@@ -277,7 +279,8 @@ export default function Privileges() {
             {
             "name" : InputName.trim(),
             "active" : false,
-            "id" : privileges.length+2
+            "id" : privileges.length+2,
+            "editing" : false
 
             }, 
             ...privileges,
