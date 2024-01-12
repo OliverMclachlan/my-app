@@ -105,7 +105,7 @@ export default function Privileges() {
                     Edit</button></li>
         )}else{
             return (
-                <li>
+                <li key={privilege.id}>
                     
                     <input
                         value={InputName2}
@@ -220,14 +220,14 @@ export default function Privileges() {
     const onlyActive = (privilege) => {
         console.log(privilege);
         if (privilege.active === true) {
-            return (<li>{privilege.name} </li>);
+            return (<li key={privilege.id}>{privilege.name} </li>);
         }
     }
 
     const onlyInactive = (privilege) => {
         console.log(privilege);
         if (privilege.active === false) {
-            return (<li>{privilege.name} </li>);
+            return (<li key={privilege.id}>{privilege.name} </li>);
         }
     }
 
