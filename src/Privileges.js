@@ -1,68 +1,89 @@
 // Basic IF statement that prints the privilege name and if it is either active or inactive.
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Privileges() {
   const [showMoreActive, setShowMoreActive] = useState(false);
   const [showMoreInactive, setShowMoreInactive] = useState(false);
   const [editingNameInputValue, setEditingNameInputValue] = useState("");
   const [addingNameInputValue, setAddingNameInputValue] = useState("");
-
   const [privileges, setPrivileges] = useState([
-    {
-      id: 1,
-      name: "change-request.make-live",
-      active: true,
-      editing: false,
-    },
-    {
-      id: 2,
-      name: "finance.departments.admin",
-      active: true,
-      editing: false,
-    },
-    {
-      id: 3,
-      name: "finance.purchase-ledger.admin",
-      active: false,
-      editing: false,
-    },
-    {
-      id: 4,
-      name: "finance.purchase-ledgerS.view",
-      active: true,
-      editing: false,
-    },
-    {
-      id: 5,
-      name: "finance.visa-claims.super-user",
-      active: false,
-      editing: false,
-    },
-    {
-      id: 6,
-      name: "import-books.admin",
-      active: true,
-      editing: false,
-    },
-    {
-      id: 7,
-      name: "manufacturing-routes.admin",
-      active: true,
-      editing: false,
-    },
-    {
-      id: 8,
-      name: "manufacturing-timings.admin",
-      active: false,
-      editing: false,
-    },
+    // commenting out in preparation for the real data
+    // {
+    //   id: 1,
+    //   name: "change-request.make-live",
+    //   active: true,
+    //   editing: false,
+    // },
+    // {
+    //   id: 2,
+    //   name: "finance.departments.admin",
+    //   active: true,
+    //   editing: false,
+    // },
+    // {
+    //   id: 3,
+    //   name: "finance.purchase-ledger.admin",
+    //   active: false,
+    //   editing: false,
+    // },
+    // {
+    //   id: 4,
+    //   name: "finance.purchase-ledgerS.view",
+    //   active: true,
+    //   editing: false,
+    // },
+    // {
+    //   id: 5,
+    //   name: "finance.visa-claims.super-user",
+    //   active: false,
+    //   editing: false,
+    // },
+    // {
+    //   id: 6,
+    //   name: "import-books.admin",
+    //   active: true,
+    //   editing: false,
+    // },
+    // {
+    //   id: 7,
+    //   name: "manufacturing-routes.admin",
+    //   active: true,
+    //   editing: false,
+    // },
+    // {
+    //   id: 8,
+    //   name: "manufacturing-timings.admin",
+    //   active: false,
+    //   editing: false,
+    // },
   ]);
 
+  // this effect will run once the first time this component mountssince the second dependency array parameter is just an empty list
+  useEffect(
+    () => {
+       // we want some code to fetch a data result json from our /authorisation/privileges endpoint
+       // and then call setPrivileges(result) on that result to make all of our existing code work with that big new privleges list :)
+      },
+    [] 
+  );
+
+  
+
+  const nameIsAlreadyTaken = name => {
+    var result = false;
+    privileges.forEach(current => {
+      if (current.name === name) {
+        result = true;
+      }
+    })
+    return result;
+  }
+
   const renderPrivilege = (privilege) => {
-    console.log(privilege);
+    // console.log(privilege);
     if (privilege.editing === false) {
       return (
-        <li key={privilege.id}>
+        <li>
           {privilege.name} is
           <button onClick={() => handleActiveButtonClick(privilege)}>
             {privilege.active ? "active" : "inactive"}
@@ -103,7 +124,7 @@ export default function Privileges() {
       );
     } else {
       return (
-        <li key={privilege.id}>
+        <li>
           <input
             value={addingNameInputValue}
             id={privilege.name}
@@ -124,22 +145,28 @@ export default function Privileges() {
           </button>
           <button
             onClick={() => {
-              const updatedPrivileges = privileges.map((current) => {
-                if (current.id === privilege.id) {
-                  return {
-                    name: addingNameInputValue,
-                    active: privilege.active,
-                    id: privilege.id,
-                    editing: false,
-                  };
-                } else {
-                  return current;
-                }
-              });
+              // console.log("In here");
+              // console.log(addingNameInputValue);
+              if (nameIsAlreadyTaken(addingNameInputValue)) {
+                console.log("name is already taken");
+              } else {
+                const updatedPrivileges = privileges.map((current) => {
+                  if (current.id === privilege.id) {
+                    return {
+                      name: addingNameInputValue,
+                      active: privilege.active,
+                      id: privilege.id,
+                      editing: false,
+                    };
+                  } else {
+                    return current;
+                  }
+                });
 
-              setPrivileges(updatedPrivileges);
-              // lets not worry about name validation for now
-              //InputNameValidation(privileges,InputName2.trim(),false)
+                setPrivileges(updatedPrivileges);
+                // lets not worry about name validation for now
+                //InputNameValidation(privileges,InputName2.trim(),false)
+              }
             }}
           >
             Save
@@ -169,7 +196,7 @@ export default function Privileges() {
     });
 
     setPrivileges(updatedPrivileges);
-    console.log(privilege.name);
+    // console.log(privilege.name);
   }
 
   function handleClickInactive(privilege) {
@@ -179,11 +206,11 @@ export default function Privileges() {
 
   function isStartEditingOk(privileges) {
     var valid = true;
-    console.log(valid + "jfjf");
+    // console.log(valid + "jfjf");
     privileges.forEach((privilege) => {
       if (privilege.editing === true) {
         valid = false;
-        console.log(valid + "aaaaaaaaa");
+        // console.log(valid + "aaaaaaaaa");
       }
     });
 
@@ -195,14 +222,14 @@ export default function Privileges() {
   }
 
   const onlyActive = (privilege) => {
-    console.log(privilege);
+    // console.log(privilege);
     if (privilege.active === true) {
       return <li key={privilege.id}>{privilege.name} </li>;
     }
   };
 
   const onlyInactive = (privilege) => {
-    console.log(privilege);
+    // console.log(privilege);
     if (privilege.active === false) {
       return <li key={privilege.id}>{privilege.name} </li>;
     }
