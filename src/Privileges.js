@@ -16,7 +16,7 @@ export default function Privileges() {
             "id" : 1,
             "name": "change-request.make-live",
             "active": true,
-            "editings" : true
+            "editing" : false
         },
         {
             "id" : 2,
