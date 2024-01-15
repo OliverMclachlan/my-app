@@ -15,7 +15,7 @@ export default function Privileges() {
     },
   };
 
-  const endpoint = "http://localhost:51799/authorisation/privileges";
+  const endpoint = "https://app.linn.co.uk/authorisation/privileges";
 
   // this effect will run once the first time this component mounts since the second dependency array parameter is just an empty list
   useEffect(() => {
@@ -44,7 +44,6 @@ export default function Privileges() {
 
   const renderPrivilege = (privilege) => {
     // console.log(privilege);
-    console.log(privileges)
     if (privilege.editing === false) {
       return (
         <li>
