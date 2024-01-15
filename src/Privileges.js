@@ -6,7 +6,7 @@ export default function Privileges() {
   const [showMoreInactive, setShowMoreInactive] = useState(false);
   const [editingNameInputValue, setEditingNameInputValue] = useState("");
   const [addingNameInputValue, setAddingNameInputValue] = useState("");
-  const [privileges, setPrivileges] = useState([
+  const [privileges, setPrivileges] = useState([]);
     // commenting out in preparation for the real data
     // {
     //   id: 1,
@@ -56,16 +56,26 @@ export default function Privileges() {
     //   active: false,
     //   editing: false,
     // },
-  ]);
-
+  
+  const headers = {headers : {Accept : "application/json"}}
   // this effect will run once the first time this component mountssince the second dependency array parameter is just an empty list
-  useEffect(
-    () => {
-       // we want some code to fetch a data result json from our /authorisation/privileges endpoint
+  useEffect(() => {
+    fetch('http://localhost:51799/authorisation/privileges',null,headers)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setPrivileges(data);
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
+  }, []);
        // and then call setPrivileges(result) on that result to make all of our existing code work with that big new privleges list :)
-      },
-    [] 
-  );
+     
 
   
 
@@ -81,6 +91,7 @@ export default function Privileges() {
 
   const renderPrivilege = (privilege) => {
     // console.log(privilege);
+    console.log(privileges)
     if (privilege.editing === false) {
       return (
         <li>
