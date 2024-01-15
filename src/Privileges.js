@@ -20,7 +20,12 @@ export default function Privileges() {
   // this effect will run once the first time this component mounts since the second dependency array parameter is just an empty list
   useEffect(() => {
     fetch(endpoint, requestParameters)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => setPrivileges(data))
       .catch(error => {
         console.error('Fetch error:', error);
