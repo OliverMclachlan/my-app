@@ -7,78 +7,26 @@ export default function Privileges() {
   const [editingNameInputValue, setEditingNameInputValue] = useState("");
   const [addingNameInputValue, setAddingNameInputValue] = useState("");
   const [privileges, setPrivileges] = useState([]);
-    // commenting out in preparation for the real data
-    // {
-    //   id: 1,
-    //   name: "change-request.make-live",
-    //   active: true,
-    //   editing: false,
-    // },
-    // {
-    //   id: 2,
-    //   name: "finance.departments.admin",
-    //   active: true,
-    //   editing: false,
-    // },
-    // {
-    //   id: 3,
-    //   name: "finance.purchase-ledger.admin",
-    //   active: false,
-    //   editing: false,
-    // },
-    // {
-    //   id: 4,
-    //   name: "finance.purchase-ledgerS.view",
-    //   active: true,
-    //   editing: false,
-    // },
-    // {
-    //   id: 5,
-    //   name: "finance.visa-claims.super-user",
-    //   active: false,
-    //   editing: false,
-    // },
-    // {
-    //   id: 6,
-    //   name: "import-books.admin",
-    //   active: true,
-    //   editing: false,
-    // },
-    // {
-    //   id: 7,
-    //   name: "manufacturing-routes.admin",
-    //   active: true,
-    //   editing: false,
-    // },
-    // {
-    //   id: 8,
-    //   name: "manufacturing-timings.admin",
-    //   active: false,
-    //   editing: false,
-    // },
-  
-  const headers = {headers : {Accept : "application/json"}}
-  // this effect will run once the first time this component mountssince the second dependency array parameter is just an empty list
+   
+  const requestParameters = {
+    method: 'GET', // I think this is the part we were missing!
+    headers: {
+      'accept': 'application/json'
+    },
+  };
+
+  const endpoint = "http://localhost:51799/authorisation/privileges";
+
+  // this effect will run once the first time this component mounts since the second dependency array parameter is just an empty list
   useEffect(() => {
-    fetch('http://localhost:51799/authorisation/privileges',null,headers)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setPrivileges(data);
-      })
+    fetch(endpoint, requestParameters)
+    .then(response => response.json())
+    .then(data => setPrivileges(data))
       .catch(error => {
         console.error('Fetch error:', error);
       });
   }, []);
-       // and then call setPrivileges(result) on that result to make all of our existing code work with that big new privleges list :)
      
-
-  
-
   const nameIsAlreadyTaken = name => {
     var result = false;
     privileges.forEach(current => {
